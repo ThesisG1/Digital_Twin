@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<launch>
+	<!-- Include the MAVROS node with SITL and Gazebo -->
+	<include file="$(find px4)/launch/mavros_posix_sitl.launch">
+	</include>
+
+	<!-- Our node to control the drone -->
+	<node pkg="ROS_layer" type="physical_shadow_control.py" name="physical_shadow_control_py" required="true" output="screen" />
+</launch>
