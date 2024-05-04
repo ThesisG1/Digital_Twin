@@ -23,11 +23,12 @@ basedir = os.path.dirname(os.path.realpath(__file__))
 @sio.on('Digital_sensors', namespace='/b2b')
 def sensedData(data):
     sio.emit('b2c', data, namespace='/manga')
+
+
     
 @sio.on('connect', namespace='/web')
 def connect_web(sid, data):
     print('[INFO] Web client connected: {}'.format(sid))
-
 
 
 @sio.on('disconnect', namespace='/web')
@@ -70,7 +71,7 @@ def disconnect_dashboard(sid):
 def handle_sensed_data(sid,message):
     sio.emit('sensedData', message, namespace='/web')
 
-
+#database
 @sio.on('connect', namespace='/dynamicDB')
 def connect_QT(sid,data):
     print("Hi from".format(sid))

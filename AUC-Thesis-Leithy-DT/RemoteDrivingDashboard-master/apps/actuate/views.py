@@ -25,6 +25,29 @@ def digitalPos(sid, message):
     print(message)
     sio.emit('position', message, namespace='/control')
 ##################################################################   
+# @sio.on('new_data', namespace='/web')
+# #Add the definition of your functions here as follows use the fn you created in Middleware
+# def newData(sid, data):
+#     sio.emit('Dataa', data, namespace='/trial1_namespace')
+
+#generated code region
+
+
+@sio.on('latency_test_data', namespace='/dashboard')
+#Add the definition of your functions here as follows use the fn you created in Middleware
+def newData(sid, data):
+    print(data)
+    sio.emit('fn', data, namespace='/latency_test_namespace')
+
+
+
+#end of generated region
+
+@sio.on('leithy', namespace='/dashboard')
+#Add the definition of your functions here as follows use the fn you created in Middleware
+def newData(sid, data):
+    print(data)
+    sio.emit('fn', data, namespace='/hello_world_digital_twin_temp_namespace')
 
 #TODO: Put the /physicalSensors namespace in the correct place
 @sio.on('connect', namespace='/physicalSensors')
