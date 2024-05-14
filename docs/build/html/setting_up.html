@@ -48,11 +48,20 @@
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="overview.html">Overview</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Getting Started</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Getting Started</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#ros-noetic-installation">ROS Noetic Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#sdk-installation">SDK Installation</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="dev_guide.html">Developer Guide</a></li>
 <li class="toctree-l1"><a class="reference internal" href="examples.html">Example Projects</a></li>
 <li class="toctree-l1"><a class="reference internal" href="errors.html">Errors</a></li>
 <li class="toctree-l1"><a class="reference internal" href="faq.html">FAQs</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Project Links:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/ThesisG1/Digital_Twin/tree/master">Source Code</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/ThesisG1/Digital_Twin/issues">Issue Tracker</a></li>
 </ul>
 
         </div>
@@ -81,6 +90,23 @@
              
   <section id="getting-started">
 <span id="setting-up"></span><h1>Getting Started<a class="headerlink" href="#getting-started" title="Permalink to this heading"></a></h1>
+<p>Using the SDK requires the following simple steps to set it up</p>
+<section id="ros-noetic-installation">
+<h2>ROS Noetic Installation<a class="headerlink" href="#ros-noetic-installation" title="Permalink to this heading"></a></h2>
+<p>Make sure you have ROS Noetic is installed on your system. If not, you can install it by following the instructions on the <a class="reference external" href="http://wiki.ros.org/ROS/Installation">ROS website</a>.</p>
+</section>
+<section id="sdk-installation">
+<h2>SDK Installation<a class="headerlink" href="#sdk-installation" title="Permalink to this heading"></a></h2>
+<p>Clone the repository</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/ThesisG1/Digital_Twin.git
+</pre></div>
+</div>
+<p>Install the requirements from the requirements.txt file</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>-r<span class="w"> </span>requirements.txt
+</pre></div>
+</div>
+<p>That’s it! Now you are set to use the SDK to build your digital twin. You can find the SDK details in the <a class="reference internal" href="dev_guide.html#developer-guide"><span class="std std-ref">Developer Guide</span></a></p>
+</section>
 </section>
 
 

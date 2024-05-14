@@ -1,6 +1,6 @@
 import rospy
 from nav_msgs.msg import Odometry
-import time 
+
 import socketio
 import os
 
@@ -24,9 +24,7 @@ def disconnect():
 #Add the definition of your functions here as follows
 @sio.event(namespace='/latency_test_namespace')
 def fn(data):
-    print('Seq:', data['header']['seq'], end= " ")
-    print('Time:' , time.time())
-    # print(data)
+    print('Data:' , data)
 
 rospy.init_node('latency_test_mw')
 
@@ -38,6 +36,6 @@ test_pub = rospy.Publisher('/test', Odometry, queue_size=10)
 
 
 if __name__ == '__main__':
-    sio.connect(os.path.expandvars('http://$HOST_IP:8000'))
+    sio.connect(os.path.expandvars('http://$HOST_IP:8000/'))
 
     rospy.spin()

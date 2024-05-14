@@ -6,7 +6,7 @@ ros_node:
       topic_1:
         name: "middleware/test"
         type:  "nav_msgs/Odometry"
-        middleware_flag: 1    #(1:we are propagating to the middleware)
+        middleware_flag: 1    
     subscribe:
       topic_1:
         name: "test"

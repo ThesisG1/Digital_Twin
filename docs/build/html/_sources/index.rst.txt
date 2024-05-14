@@ -16,7 +16,7 @@ The Project
 Building digital twins for drones is not a trivial task and it requires a specific pipeline to be followed as well as specific hardware and software components. 
 Our project aims to provide a Software Development Kit (SDK) that will help developers to build digital twins for automated vehicles whether they be robotic or aeronautic.
 
-The project uses the concept of a dockerized private cloud to host the dashboard and the Namespace that establish the bidirectional communication aka the digital twin
+The project uses the concept of a dockerized private cloud to host the dashboard and the Namespace that establish the bidirectional communication aka the digital twin.
 
 .. The technical aspects of the project is described in the :ref:`overview`
 
@@ -45,6 +45,13 @@ The project uses the concept of a dockerized private cloud to host the dashboard
    errors
    faq
 
+.. toctree::
+   :maxdepth: 2
+   :caption: Project Links:
+
+   Source Code <https://github.com/ThesisG1/Digital_Twin/tree/master>
+   Discord <https://discord.gg/HzBeNUZE>
+   Issue Tracker <https://github.com/ThesisG1/Digital_Twin/issues>
 
 Indices and tables
 ==================

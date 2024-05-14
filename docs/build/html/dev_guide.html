@@ -49,10 +49,20 @@
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="overview.html">Overview</a></li>
 <li class="toctree-l1"><a class="reference internal" href="setting_up.html">Getting Started</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Developer Guide</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Developer Guide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#yaml-file">YAML File</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#code-generators">Code Generators</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="examples.html">Example Projects</a></li>
 <li class="toctree-l1"><a class="reference internal" href="errors.html">Errors</a></li>
 <li class="toctree-l1"><a class="reference internal" href="faq.html">FAQs</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Project Links:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/ThesisG1/Digital_Twin/tree/master">Source Code</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://discord.gg/HzBeNUZE">Discord</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/ThesisG1/Digital_Twin/issues">Issue Tracker</a></li>
 </ul>
 
         </div>
@@ -81,19 +91,34 @@
              
   <section id="developer-guide">
 <span id="id1"></span><h1>Developer Guide<a class="headerlink" href="#developer-guide" title="Permalink to this heading"></a></h1>
-<p>Using the SDK requires the following steps:</p>
-<ol class="arabic simple">
-<li><p>Install the SDK</p></li>
-</ol>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>DTSDK
+<p>This guide is intended to show developers how to use the SDK to create their own digital twin applications</p>
+<section id="yaml-file">
+<h2>YAML File<a class="headerlink" href="#yaml-file" title="Permalink to this heading"></a></h2>
+<p>The YAML file will include all the ros nodes that will be in the digital twin and from this file all worklow is going to be created.
+Files created from the yaml file will create a files in each layer to relay from the ROS layer to the middleware layer and to the namespace layer.</p>
+<p>The yaml file is found under the SDK_NL directory inside the ros_layer directory.</p>
+<p>The structure of the YAML file is as follows:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">ros_node</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">latency_test</span>
+<span class="w">    </span><span class="nt">flow_flag</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0</span><span class="w">         </span><span class="c1">#(1:Bottom-Up Flow, 0:Top-Down Flow)</span>
+<span class="w">    </span><span class="nt">topics</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">publish</span><span class="p">:</span>
+<span class="w">            </span><span class="nt">topic_1</span><span class="p">:</span>
+<span class="w">                </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;middleware/test&quot;</span>
+<span class="w">                </span><span class="nt">type</span><span class="p">:</span><span class="w">  </span><span class="s">&quot;nav_msgs/Odometry&quot;</span>
+<span class="w">                </span><span class="nt">middleware_flag</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1</span>
+<span class="w">        </span><span class="nt">subscribe</span><span class="p">:</span>
+<span class="w">            </span><span class="nt">topic_1</span><span class="p">:</span>
+<span class="w">                </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;test&quot;</span>
+<span class="w">                </span><span class="nt">type</span><span class="p">:</span><span class="w">  </span><span class="s">&quot;nav_msgs/Odometry&quot;</span>
+<span class="w">                </span><span class="nt">middleware_flag</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1</span>
 </pre></div>
 </div>
-<ol class="arabic simple" start="2">
-<li><p>Import the SDK</p></li>
-</ol>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">DTSDK</span> <span class="kn">import</span> <span class="n">DTSDK</span>
-</pre></div>
-</div>
+</section>
+<section id="code-generators">
+<h2>Code Generators<a class="headerlink" href="#code-generators" title="Permalink to this heading"></a></h2>
+<p>For each layer in our worklow, we have a generator</p>
+</section>
 </section>
 
 
