@@ -19,8 +19,8 @@
 # -- Project information -----------------------------------------------------
 
 project = 'Khet-Shut: Drone Digital Twin SDK'
-copyright = '2024, Mostafa'
-author = 'Mostafa'
+copyright = '2024, Thesis G1'
+author = 'G1'
 
 # The full version, including alpha/beta/rc tags
 release = '0.1'
