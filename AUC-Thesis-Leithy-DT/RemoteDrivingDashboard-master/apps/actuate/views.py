@@ -30,7 +30,7 @@ def digitalPos(sid, message):
 # def newData(sid, data):
 #     sio.emit('Dataa', data, namespace='/trial1_namespace')
 
-#generated code region
+#Generated Code Region
 
 
 @sio.on('latency_test_data', namespace='/dashboard')
@@ -41,7 +41,7 @@ def newData(sid, data):
 
 
 
-#end of generated region
+#End of Generated Region
 
 @sio.on('leithy', namespace='/dashboard')
 #Add the definition of your functions here as follows use the fn you created in Middleware

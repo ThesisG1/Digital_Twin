@@ -1,23 +1,23 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en">
 <head>
-  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Developer Guide &mdash; Khet-Shut: Drone Digital Twin SDK 0.1 documentation</title>
-      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
-      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css" />
 
   
   <!--[if lt IE 9]>
     <script src="_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script src="_static/jquery.js?v=5d32c60e"></script>
-        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js?v=e031e9a9"></script>
-        <script src="_static/doctools.js?v=888ff710"></script>
-        <script src="_static/sphinx_highlight.js?v=4825356b"></script>
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="_static/doctools.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -50,8 +50,23 @@
 <li class="toctree-l1"><a class="reference internal" href="overview.html">Overview</a></li>
 <li class="toctree-l1"><a class="reference internal" href="setting_up.html">Getting Started</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Developer Guide</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#yaml-file">YAML File</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#code-generators">Code Generators</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#generating-a-digital-twin">Generating a Digital Twin</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#yaml-file">YAML File</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#code-generator">Code Generator</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#namespace-layer">Namespace Layer</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#ros-layer-and-middleware-layer">ROS Layer and Middleware Layer</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#bidirectional-communication">Bidirectional Communication</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#running-the-digital-twin">Running the Digital Twin</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#dockerized-private-cloud">Dockerized Private Cloud</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#dashboard">Dashboard</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#ros-layer">ROS Layer</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#middleware-layer">Middleware Layer</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="examples.html">Example Projects</a></li>
@@ -92,14 +107,16 @@
   <section id="developer-guide">
 <span id="id1"></span><h1>Developer Guide<a class="headerlink" href="#developer-guide" title="Permalink to this heading"></a></h1>
 <p>This guide is intended to show developers how to use the SDK to create their own digital twin applications</p>
+<section id="generating-a-digital-twin">
+<h2>Generating a Digital Twin<a class="headerlink" href="#generating-a-digital-twin" title="Permalink to this heading"></a></h2>
 <section id="yaml-file">
-<h2>YAML File<a class="headerlink" href="#yaml-file" title="Permalink to this heading"></a></h2>
+<h3>YAML File<a class="headerlink" href="#yaml-file" title="Permalink to this heading"></a></h3>
 <p>The YAML file will include all the ros nodes that will be in the digital twin and from this file all worklow is going to be created.
 Files created from the yaml file will create a files in each layer to relay from the ROS layer to the middleware layer and to the namespace layer.</p>
 <p>The yaml file is found under the SDK_NL directory inside the ros_layer directory.</p>
 <p>The structure of the YAML file is as follows:</p>
 <div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">ros_node</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">latency_test</span>
+<span class="w">    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">node_name</span>
 <span class="w">    </span><span class="nt">flow_flag</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0</span><span class="w">         </span><span class="c1">#(1:Bottom-Up Flow, 0:Top-Down Flow)</span>
 <span class="w">    </span><span class="nt">topics</span><span class="p">:</span>
 <span class="w">        </span><span class="nt">publish</span><span class="p">:</span>
@@ -114,10 +131,104 @@ Files created from the yaml file will create a files in each layer to relay from
 <span class="w">                </span><span class="nt">middleware_flag</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1</span>
 </pre></div>
 </div>
+<p><strong>YAML File Structure:</strong></p>
+<ul class="simple">
+<li><p><strong>ros_node</strong>: This is the main key for the YAML file. It will include details about the node needed.</p></li>
+<li><p><strong>name</strong>: This is the name of the ROS node.</p></li>
+<li><p><strong>flow_flag</strong>: This flag is used to determine the flow of the data. If the flag is set to 1, the data will flow from the namespace layer to the middleware layer to the ROS layer. If the flag is set to 0, the data will flow from the ROS layer to the middleware layer to the namespace layer.</p></li>
+<li><p><strong>topics</strong>: This key will include the topics that the node will publish and subscribe to.</p></li>
+<li><p><strong>publish</strong>: This key will include the topics that the node will publish to.</p></li>
+<li><p><strong>subscribe</strong>: This key will include the topics that the node will subscribe to.</p></li>
+<li><p><strong>topic_1</strong>: This key will include the details of the topic.</p></li>
+<li><p><strong>name</strong>: This is the name of the topic.</p></li>
+<li><p><strong>type</strong>: This is the message type of the topic.</p></li>
+</ul>
+<p><strong>Note</strong>: when inputting the name of the topic, the name shouldn’t include / at the beginning. For now the node_config.yaml file exists in the SDK_NL/ros_layer directory.</p>
 </section>
-<section id="code-generators">
-<h2>Code Generators<a class="headerlink" href="#code-generators" title="Permalink to this heading"></a></h2>
-<p>For each layer in our worklow, we have a generator</p>
+<section id="code-generator">
+<h3>Code Generator<a class="headerlink" href="#code-generator" title="Permalink to this heading"></a></h3>
+<p>After creating the YAML file, the following steps generate files for the ROS layer and the middleware layer, the following steps are needed:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span><span class="nb">cd</span><span class="w"> </span>SDK_NL/ros_layer
+$<span class="w"> </span>python3<span class="w"> </span>node_generator.py
+</pre></div>
+</div>
+<p>This will generate code for the ROS layer and the middleware layer. The generated files will be named in {node_name}_ros.py and {node_name}_middleware.py.</p>
+<ul class="simple">
+<li><p><strong>ROS Layer</strong>: AUC-Thesis-Leithy-DT/ROS-master</p></li>
+<li><p><strong>Middleware Layer</strong>: AUC-Thesis-Leithy-DT/ROS-master/cloudconnect</p></li>
+<li><p><strong>Namespace Layer</strong>: AUC-Thesis-Leithy-DT/RemoteDrivingDashboard-master/apps/actuate/views.py</p></li>
+</ul>
+<section id="namespace-layer">
+<h4>Namespace Layer<a class="headerlink" href="#namespace-layer" title="Permalink to this heading"></a></h4>
+<p>The namesapce layer files are already generated only the following code snippet from the views.py file is generated when the node_generator.py is run:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1">#Generated Code Region</span>
+
+<span class="nd">@sio</span><span class="o">.</span><span class="n">on</span><span class="p">(</span><span class="s1">&#39;latency_test_data&#39;</span><span class="p">,</span> <span class="n">namespace</span><span class="o">=</span><span class="s1">&#39;/dashboard&#39;</span><span class="p">)</span>
+<span class="c1">#Add the definition of your functions here as follows use the fn you created in Middleware</span>
+<span class="k">def</span> <span class="nf">newData</span><span class="p">(</span><span class="n">sid</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+    <span class="n">sio</span><span class="o">.</span><span class="n">emit</span><span class="p">(</span><span class="s1">&#39;fn&#39;</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">namespace</span><span class="o">=</span><span class="s1">&#39;/latency_test_namespace&#39;</span><span class="p">)</span>
+
+<span class="c1">#End of Generated Region</span>
+</pre></div>
+</div>
+</section>
+<section id="ros-layer-and-middleware-layer">
+<h4>ROS Layer and Middleware Layer<a class="headerlink" href="#ros-layer-and-middleware-layer" title="Permalink to this heading"></a></h4>
+<p>Once you locate the generated files, you can start editing the files to add the functionality you need in the callback functions.</p>
+</section>
+</section>
+<section id="bidirectional-communication">
+<h3>Bidirectional Communication<a class="headerlink" href="#bidirectional-communication" title="Permalink to this heading"></a></h3>
+<p>For the bidirectional communication, you should generate a your code from the YAML file once with the <em>flow_flag</em> set to 0 and another time with the <em>flow_flag</em> set to 1. Make sure that the two nodes are not under the same master node.</p>
+</section>
+</section>
+<section id="running-the-digital-twin">
+<h2>Running the Digital Twin<a class="headerlink" href="#running-the-digital-twin" title="Permalink to this heading"></a></h2>
+<p>Once you have generated all the files and edited the code, you can run the digital twin by running each layer step-by-step.</p>
+<section id="dockerized-private-cloud">
+<h3>Dockerized Private Cloud<a class="headerlink" href="#dockerized-private-cloud" title="Permalink to this heading"></a></h3>
+<p>To run the Dockerized Private Cloud and its services, you need to run the following:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span><span class="nb">cd</span><span class="w"> </span>AUC-Thesis-Leithy-DT/AUC-Thesis-DT-Physical/RemoteDrivingDashboard-master
+$<span class="w"> </span><span class="nb">export</span><span class="w"> </span><span class="nv">$HOST_IP</span><span class="o">=</span>localhost
+$<span class="w"> </span>docker-compose<span class="w"> </span>up
+</pre></div>
+</div>
+<p>Now you will have the private dockerized cloud aka the namespace layer running.</p>
+</section>
+<section id="dashboard">
+<h3>Dashboard<a class="headerlink" href="#dashboard" title="Permalink to this heading"></a></h3>
+<p>The dashboard visualizes the digital twin connections and data. To run the dashboard, you need to run the following:</p>
+<ol class="arabic simple">
+<li><p>The following file shows the services such as the camera stream or sensory data that you want to visualize.</p></li>
+</ol>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span><span class="nb">cd</span><span class="w"> </span>/AUC-Thesis-Leithy-DT/OTA_RemoteDrivingConfigurator-main/Designs/
+$<span class="w"> </span>python3<span class="w"> </span>QTGUI.py
+</pre></div>
+</div>
+<ol class="arabic simple" start="2">
+<li><p>Open the dashboard by going to your browser and go to the <strong>http://localhost:8000</strong> URL.</p></li>
+</ol>
+<p>The dashboard has the necessary functionalities. If your application has more and they are not supported by the dashboard, you can add them by editing the javascript files.</p>
+</section>
+<section id="ros-layer">
+<h3>ROS Layer<a class="headerlink" href="#ros-layer" title="Permalink to this heading"></a></h3>
+<p>To run the ROS layer for a specific node, you need to simply run it by going to the directory and running it as follows:
+Chnage the <em>node_name</em> to the name of the node you want to run.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span><span class="nb">cd</span><span class="w"> </span>AUC-Thesis-Leithy-DT/ROS-master
+$<span class="w"> </span>python3<span class="w"> </span><span class="o">{</span>node_name<span class="o">}</span>_ros.py
+</pre></div>
+</div>
+</section>
+<section id="middleware-layer">
+<h3>Middleware Layer<a class="headerlink" href="#middleware-layer" title="Permalink to this heading"></a></h3>
+<p>To run the middleware layer for a specific node, you need to simply run it by going to the directory and running it as follows:
+Chnage the <em>node_name</em> to the name of the node you want to run.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span><span class="nb">cd</span><span class="w"> </span>AUC-Thesis-Leithy-DT/ROS-master/cloudconnect
+$<span class="w"> </span>python3<span class="w"> </span><span class="o">{</span>node_name<span class="o">}</span>_middleware.py
+</pre></div>
+</div>
+</section>
 </section>
 </section>
 
