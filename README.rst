@@ -1,4 +1,4 @@
 Digital Twin SDK
 =======================================
 
-This is the repo for the SDK
+For information about using this SDK, Read the docs here: https://dpc-digital-twin-sdk.readthedocs.io/en/latest/
